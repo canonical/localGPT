@@ -151,10 +151,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--host",
         type=str,
-        default="127.0.0.1",
-        help="Host to run the UI on. Defaults to 127.0.0.1. "
-        "Set to 0.0.0.0 to make the UI externally "
-        "accessible from other devices.",
+        default="0.0.0.0",
+        help="Host to run the UI on. Defaults to 0.0.0.0.",
     )
     args = parser.parse_args()
 
