@@ -4,7 +4,7 @@ import shutil
 import subprocess
 import argparse
 
-import torch
+# import torch
 from flask import Flask, jsonify, request
 from langchain.chains import RetrievalQA
 from utils import get_embeddings, get_llm, get_db
