@@ -8,7 +8,7 @@ from langchain.document_loaders import CSVLoader, PDFMinerLoader, TextLoader, Un
 from langchain.document_loaders import UnstructuredFileLoader, UnstructuredMarkdownLoader
 from langchain.document_loaders import UnstructuredHTMLLoader
 
-
+OLLAMA_URL="http://192.168.1.34:11434"
 # load_dotenv()
 ROOT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 
@@ -58,7 +58,8 @@ DOCUMENT_MAP = {
 }
 
 # Default Instructor Model
-EMBEDDING_MODEL_NAME = "hkunlp/instructor-large"  # Uses 1.5 GB of VRAM (High Accuracy with lower VRAM usage)
+#EMBEDDING_MODEL_NAME = "hkunlp/instructor-large"  # Uses 1.5 GB of VRAM (High Accuracy with lower VRAM usage)
+EMBEDDING_MODEL_NAME = "ollama/nomic-embed-text"
 
 ####
 #### OTHER EMBEDDING MODEL OPTIONS

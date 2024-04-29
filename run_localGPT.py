@@ -13,6 +13,7 @@ callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 
 from prompt_template_utils import get_prompt_template
 from utils import get_embeddings
+from langchain.llms import Ollama
 
 # from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.vectorstores import Chroma
@@ -36,6 +37,7 @@ from constants import (
     MAX_NEW_TOKENS,
     MODELS_PATH,
     CHROMA_SETTINGS,
+    OLLAMA_URL,
 )
 
 
@@ -139,7 +141,8 @@ def retrieval_qa_pipline(device_type, use_history, promptTemplate_type="llama"):
     prompt, memory = get_prompt_template(promptTemplate_type=promptTemplate_type, history=use_history)
 
     # load the llm pipeline
-    llm = load_model(device_type, model_id=MODEL_ID, model_basename=MODEL_BASENAME, LOGGING=logging)
+    #llm = load_model(device_type, model_id=MODEL_ID, model_basename=MODEL_BASENAME, LOGGING=logging)
+    llm = Ollama(model='llama3', base_url=OLLAMA_URL)
 
     if use_history:
         qa = RetrievalQA.from_chain_type(

@@ -5,7 +5,8 @@ from constants import EMBEDDING_MODEL_NAME
 from langchain.embeddings import HuggingFaceInstructEmbeddings
 from langchain.embeddings import HuggingFaceBgeEmbeddings
 from langchain.embeddings import HuggingFaceEmbeddings
-
+from langchain.embeddings import OllamaEmbeddings
+from constants import OLLAMA_URL
 
 def log_to_csv(question, answer):
 
@@ -39,6 +40,13 @@ def get_embeddings(device_type="cuda"):
             query_instruction="Represent the question for retrieving supporting documents:",
         )
 
+    elif "ollama/" in EMBEDDING_MODEL_NAME:
+        return OllamaEmbeddings(
+            model=EMBEDDING_MODEL_NAME.split("/")[-1],
+            embed_instruction="Represent the document for retrieval:",
+            query_instruction="Represent the question for retrieving supporting documents:",
+            base_url=OLLAMA_URL, #"http://192.168.1.13:11434",
+        )
     elif "bge" in EMBEDDING_MODEL_NAME:
         return HuggingFaceBgeEmbeddings(
             model_name=EMBEDDING_MODEL_NAME,
