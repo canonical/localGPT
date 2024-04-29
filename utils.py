@@ -1,12 +1,10 @@
 import os
 import csv
 from datetime import datetime
-from constants import EMBEDDING_MODEL_NAME
-from langchain.embeddings import HuggingFaceInstructEmbeddings
-from langchain.embeddings import HuggingFaceBgeEmbeddings
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.embeddings import OllamaEmbeddings
-from constants import OLLAMA_URL
+from langchain_community.embeddings import OllamaEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain_community.llms import Ollama
+from constants import EMBEDDING_MODEL_NAME, OLLAMA_URL, MODEL_ID, CHROMA_SETTINGS, PERSIST_DIRECTORY
 
 def log_to_csv(question, answer):
 
@@ -31,31 +29,23 @@ def log_to_csv(question, answer):
         writer.writerow([timestamp, question, answer])
 
 
-def get_embeddings(device_type="cuda"):
-    if "instructor" in EMBEDDING_MODEL_NAME:
-        return HuggingFaceInstructEmbeddings(
-            model_name=EMBEDDING_MODEL_NAME,
-            model_kwargs={"device": device_type},
-            embed_instruction="Represent the document for retrieval:",
-            query_instruction="Represent the question for retrieving supporting documents:",
+def get_embeddings():
+    return OllamaEmbeddings(
+        model=EMBEDDING_MODEL_NAME,
+        embed_instruction="Represent the document for retrieval:",
+        query_instruction="Represent the question for retrieving supporting documents:",
+        base_url=OLLAMA_URL,
+    )
+
+def get_llm():
+    return Ollama(
+        model=MODEL_ID,
+        base_url=OLLAMA_URL
         )
 
-    elif "ollama/" in EMBEDDING_MODEL_NAME:
-        return OllamaEmbeddings(
-            model=EMBEDDING_MODEL_NAME.split("/")[-1],
-            embed_instruction="Represent the document for retrieval:",
-            query_instruction="Represent the question for retrieving supporting documents:",
-            base_url=OLLAMA_URL, #"http://192.168.1.13:11434",
-        )
-    elif "bge" in EMBEDDING_MODEL_NAME:
-        return HuggingFaceBgeEmbeddings(
-            model_name=EMBEDDING_MODEL_NAME,
-            model_kwargs={"device": device_type},
-            query_instruction="Represent this sentence for searching relevant passages:",
-        )
-
-    else:
-        return HuggingFaceEmbeddings(
-            model_name=EMBEDDING_MODEL_NAME,
-            model_kwargs={"device": device_type},
+def get_db():
+    return Chroma(
+        persist_directory=PERSIST_DIRECTORY,
+        embedding_function=get_embeddings(),
+        client_settings=CHROMA_SETTINGS,
         )

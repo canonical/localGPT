@@ -1,14 +1,15 @@
 import os
 
 # from dotenv import load_dotenv
+from langchain_community.vectorstores import Chroma
 from chromadb.config import Settings
 
 # https://python.langchain.com/en/latest/modules/indexes/document_loaders/examples/excel.html?highlight=xlsx#microsoft-excel
-from langchain.document_loaders import CSVLoader, PDFMinerLoader, TextLoader, UnstructuredExcelLoader, Docx2txtLoader
-from langchain.document_loaders import UnstructuredFileLoader, UnstructuredMarkdownLoader
-from langchain.document_loaders import UnstructuredHTMLLoader
+from langchain_community.document_loaders import CSVLoader, PDFMinerLoader, TextLoader, UnstructuredExcelLoader, Docx2txtLoader
+from langchain_community.document_loaders import UnstructuredFileLoader, UnstructuredMarkdownLoader
+from langchain_community.document_loaders import UnstructuredHTMLLoader
 
-OLLAMA_URL="http://192.168.1.34:11434"
+OLLAMA_URL= os.environ.get("OLLAMA_URL", "http://localhost:11434")
 # load_dotenv()
 ROOT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 
@@ -59,7 +60,7 @@ DOCUMENT_MAP = {
 
 # Default Instructor Model
 #EMBEDDING_MODEL_NAME = "hkunlp/instructor-large"  # Uses 1.5 GB of VRAM (High Accuracy with lower VRAM usage)
-EMBEDDING_MODEL_NAME = "ollama/nomic-embed-text"
+EMBEDDING_MODEL_NAME = os.environ.get("EMBEDDING_MODEL_NAME", "nomic-embed-text")
 
 ####
 #### OTHER EMBEDDING MODEL OPTIONS
@@ -101,8 +102,8 @@ EMBEDDING_MODEL_NAME = "ollama/nomic-embed-text"
 # MODEL_ID = "TheBloke/Llama-2-13b-Chat-GGUF"
 # MODEL_BASENAME = "llama-2-13b-chat.Q4_K_M.gguf"
 
-MODEL_ID = "TheBloke/Llama-2-7b-Chat-GGUF"
-MODEL_BASENAME = "llama-2-7b-chat.Q4_K_M.gguf"
+MODEL_ID = os.environ.get("MODEL_ID", "llama3")
+#MODEL_BASENAME = "llama-2-7b-chat.Q4_K_M.gguf"
 
 # MODEL_ID = "TheBloke/Mistral-7B-Instruct-v0.1-GGUF"
 # MODEL_BASENAME = "mistral-7b-instruct-v0.1.Q8_0.gguf"

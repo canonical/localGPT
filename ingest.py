@@ -6,7 +6,7 @@ import click
 import torch
 from langchain.docstore.document import Document
 from langchain.text_splitter import Language, RecursiveCharacterTextSplitter
-from langchain.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma
 from utils import get_embeddings
 
 from constants import (
@@ -158,12 +158,12 @@ def main(device_type):
 
     """
     (1) Chooses an appropriate langchain library based on the enbedding model name.  Matching code is contained within fun_localGPT.py.
-    
+
     (2) Provides additional arguments for instructor and BGE models to improve results, pursuant to the instructions contained on
     their respective huggingface repository, project page or github repository.
     """
 
-    embeddings = get_embeddings(device_type)
+    embeddings = get_embeddings()
 
     logging.info(f"Loaded embeddings from {EMBEDDING_MODEL_NAME}")
 
