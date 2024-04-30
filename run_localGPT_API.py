@@ -126,7 +126,7 @@ def prompt_route():
         with request_lock:
             # print(f'User Prompt: {user_prompt}')
             # Get the answer from the chain
-            res = QA(user_prompt)
+            res = QA.invoke(user_prompt)
             answer, docs = res["result"], res["source_documents"]
 
             prompt_response_dict = {
