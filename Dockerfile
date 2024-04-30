@@ -21,5 +21,9 @@ COPY --from=builder /usr/local/lib/python${PY_VERSION}/site-packages /usr/local/
 
 COPY . .
 
+ENV DB_PATH=/db
+
+VOLUME /db
+
 EXPOSE 5110/tcp
 CMD [ "python", "./run_localGPT_API.py" ]
