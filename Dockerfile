@@ -19,7 +19,7 @@ WORKDIR /app
 
 COPY --from=builder /usr/local/lib/python${PY_VERSION}/site-packages /usr/local/lib/python${PY_VERSION}/site-packages/
 
-COPY . .
+COPY *.py ./
 
 ENV DB_PATH=/db
 
