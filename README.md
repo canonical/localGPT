@@ -195,7 +195,7 @@ Another option is to enable chat history. ***Note***: This is disabled by defaul
 python run_localGPT.py --use_history
 ```
 
-You can store user questions and model responses with flag `--save_qa` into a csv file `/local_chat_history/qa_log.csv`. Every interaction will be stored. 
+You can store user questions and model responses with flag `--save_qa` into a csv file `/local_chat_history/qa_log.csv`. Every interaction will be stored.
 
 ```shell
 python run_localGPT.py --save_qa
@@ -328,15 +328,15 @@ This is a test project to validate the feasibility of a fully local solution for
     ```
 
 # Push image to github
-echo $CR_PAT | /Applications/Docker.app/Contents/Resources/bin/docker login ghcr.io -u shundezhang --password-stdin
-/Applications/Docker.app/Contents/Resources/bin/docker tag localgpt ghcr.io/canonical/localgpt:latest
-/Applications/Docker.app/Contents/Resources/bin/docker push ghcr.io/canonical/localgpt:latest
+echo $CR_PAT | docker login ghcr.io -u <user> --password-stdin
+docker tag localgpt ghcr.io/canonical/localgpt:latest
+docker push ghcr.io/canonical/localgpt:latest
 
 # Build docker image
-/Applications/Docker.app/Contents/Resources/bin/docker build . -t localgpt
+docker build . -t localgpt
 
 # Run docker image
-/Applications/Docker.app/Contents/Resources/bin/docker run -d -e OLLAMA_URL='http://192.168.1.34:11434' -e DB_PATH='/DB' -v ./DB:/DB -p 5110:5110 localgpt
+docker run -d -e OLLAMA_URL='http://192.168.1.34:11434' -e DB_PATH='/DB' -v ./DB:/DB -p 5110:5110 localgpt
 
 # Test API
 curl -X POST -d 'user_prompt=how to run sosreport' http://localhost:5110/api/prompt_route | jq .
