@@ -1,0 +1,10 @@
+services:
+  localgpt:
+    image: localgpt
+    restart: unless-stopped
+    environment:
+      OLLAMA_URL: ${OLLAMA_URL}
+    volumes:
+      - ./db:/db
+    ports:
+      - 5110:5110
