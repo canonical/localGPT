@@ -327,6 +327,14 @@ This is a test project to validate the feasibility of a fully local solution for
        pip install transformers
     ```
 
+- [loading error: File is not a zip file when ingesting HTML files](https://github.com/langchain-ai/langchain/issues/5264)
+  - Run the following with python
+    ``` python
+    import nltk
+    for pkg in ['punkt', 'averaged_perceptron_tagger']:
+      nltk.download(pkg)
+    ```
+
 # Push image to github
 echo $CR_PAT | /Applications/Docker.app/Contents/Resources/bin/docker login ghcr.io -u shundezhang --password-stdin
 /Applications/Docker.app/Contents/Resources/bin/docker tag localgpt ghcr.io/canonical/localgpt:latest
