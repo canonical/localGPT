@@ -17,7 +17,7 @@ unstructured
 unstructured[pdf]
 
 # Utilities
-urllib3==1.26.6
+urllib3==1.26.19
 accelerate
 bitsandbytes ; sys_platform != 'win32'
 bitsandbytes-windows ; sys_platform == 'win32'
